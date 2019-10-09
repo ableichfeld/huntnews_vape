@@ -10,8 +10,8 @@
     <h2>Cigarette and vaping device use overview</h2>
     <script>
       var width = 780;
-      var height = 615;
-      var margin = {top: 25, left: 55, right: 25, bottom: 245};
+      var height = 575;
+      var margin = {top: 25, left: 55, right: 25, bottom: 200};
 
       var svg = d3.select("body")
         .append("svg")
@@ -86,9 +86,8 @@
 
         var xLabel = svg.append("text")
           .attr("class","axisLabel")
-          .attr("x",width/2)
-          .attr("y",height-75)
-          .attr("text-anchor","middle")
+          .attr("x",55)
+          .attr("y",height-35)
           .text("Drug type and method of consumption by age group");
 
         var yLabel = svg.append("text")
