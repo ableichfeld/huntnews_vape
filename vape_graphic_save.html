@@ -68,7 +68,7 @@
             .attr("fill","#CC0000")
             .on("mouseover", function(d) {
               d3.select(this)
-                .attr("fill","grey");
+                .attr("fill","#800000");
                 tooltip.style("visibility", "visible")
                   .text(`${d.y}%`);
             }).on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
@@ -100,13 +100,23 @@
           .attr("y",height-55)
           .attr("width",100)
           .attr("height",50)
-          .attr("fill","white")
-          .attr("stroke","black")
-          .attr("stroke-width",2)
+          .attr("fill","#CC0000")
+          .attr("stroke","#bf4040")
+          .attr("stroke-width",0)
+          .on("mouseover",function(){
+            d3.select(this)
+              .attr("fill","#800000")
+              .attr("stroke-width",3)
+              .attr("border-left", "5px solid black;");
+          }) .on("mouseout", function() {
+            d3.select(this)
+              .attr("fill","#CC0000")
+              .attr("stroke-width",0);})
         collegeButton.append("text")
           .attr("x", 150)
           .attr("y", height-25)
           .attr("text-anchor","middle")
+          .attr("fill","white")
           .text("College");
 
 
