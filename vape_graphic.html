@@ -58,7 +58,7 @@
           .attr("class", "tooltip")
           .style("position", "absolute")
           .style("z-index", "10")
-          .style("visibility", "hidden");
+          .style("opacity", 0);
 
         var bar = svg.selectAll("rect")
           .data(data)
@@ -74,14 +74,18 @@
             .attr("stroke-width","2")
             .on("mouseover", function(d) {
               d3.select(this)
-                .attr("opacity",".8");
-                tooltip.style("visibility", "visible")
-                  .text(`${d.y}%`);
+                .attr("opacity",".85");
+                tooltip.transition()
+                .duration(300)
+                .style("opacity", "0.9")
+                .text(`${d.y}%`);
             }).on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
             .on("mouseout", function() {
               d3.select(this)
                 .attr("opacity",".65");
-              return tooltip.style("visibility", "hidden");
+              return tooltip.transition()
+              .duration(300)
+              .style("opacity", "0");
             })
 
         var xLabel = svg.append("text")

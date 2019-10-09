@@ -19,6 +19,22 @@ h1,h2{
   font-weight: 300;
 }
 
+div.tooltip{
+  position:absolute;
+  text-align: center;
+  width: 50px;
+  height: 22px;
+  padding: 2px;
+  font-size: 12pt;
+  font-family: Source Sans Pro;
+  font-weight: 300;
+  background: grey;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+  color: white;
+}
+
 button{
   background-color: #CC0000;
   border: none;
