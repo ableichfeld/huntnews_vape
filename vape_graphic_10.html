@@ -3,6 +3,7 @@
   <head>
     <title>Cigarette and Vape use by Age Group</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="vape_graphic_style.css"/>
   </head>
   <body>
     <script>
@@ -16,20 +17,15 @@
         .attr("height",height);
 
       var data = [
-          {x: "8th grade cigarette use", y: 2.2},
-          {x: "8th grade vaping", y: 10.4},
-          {x: "10th grade cigarette use", y: 4.2},
-          {x: "10th grade vaping", y: 21.7},
-          {x: "12th grade cigarette use", y: 7.6},
-          {x: "12th grade vaping", y: 26.7},
-          {x: "College students cigarette use", y: 6.8},
-          {x: "College vaping", y: 21.3},
-          {x: "Young adults cigarette use", y: 12.3},
-          {x: "Young adults vaping", y: 17.1}
-        ];
+        {x: "Cigarette use", y: 4.2},
+        {x: "Any vaping", y: 21.7},
+        {x: "Vaping nicotine", y: 16.1},
+        {x: "Vaping marijuana", y: 7.0},
+        {x: "Vaping flavor only", y: 13.1},
+      ];
 
         var xScale = d3.scaleBand()
-          .domain(["8th grade cigarette use","8th grade vaping","10th grade cigarette use","10th grade vaping","12th grade cigarette use","12th grade vaping","College students cigarette use","College vaping","Young adults cigarette use","Young adults vaping"])
+          .domain(["Cigarette use","Any vaping","Vaping nicotine","Vaping marijuana","Vaping flavor only"])
           .rangeRound([margin.left, width-margin.right])
           .padding(0.25);
 
@@ -81,9 +77,9 @@
         var xLabel = svg.append("text")
           .attr("class","axisLabel")
           .attr("x",width/2)
-          .attr("y",height-75)
+          .attr("y",height-125)
           .attr("text-anchor","middle")
-          .text("Age group");
+          .text("Drug type and method of consumption");
 
         var yLabel = svg.append("text")
           .attr("class","axisLabel")
@@ -92,44 +88,13 @@
           .attr("y",20)
           .attr("text-anchor","middle")
           .text("30-day prevalence of use (%)");
-
-        var collegeButton = svg.append("g")
-
-        collegeButton.append("rect")
-          .attr("x",100)
-          .attr("y",height-55)
-          .attr("width",100)
-          .attr("height",50)
-          .attr("fill","#CC0000")
-          .attr("stroke","#bf4040")
-          .attr("stroke-width",0)
-          .on("mouseover",function(){
-            d3.select(this)
-              .attr("fill","#800000")
-              .attr("stroke-width",3)
-              .attr("border-left", "5px solid black;");
-          }) .on("mouseout", function() {
-            d3.select(this)
-              .attr("fill","#CC0000")
-              .attr("stroke-width",0);})
-        collegeButton.append("text")
-          .attr("x", 150)
-          .attr("y", height-25)
-          .attr("text-anchor","middle")
-          .attr("fill","white")
-          .text("College");
-
-
-
-
-
-
-
-
-
-
-
-
     </script>
+    <button type="button" onclick="window.location.href = 'vape_graphic_8.html';">8th grade</button>
+    <button type="button" onclick="window.location.href = 'vape_graphic.html';">Main</button>
+    <button type="button" onclick="window.location.href = 'vape_graphic_12.html';">12th grade</button>
+    <button type="button" onclick="window.location.href = 'vape_graphic_college.html';">College</button>
+    <button type="button" onclick="window.location.href = 'vape_graphic_ya.html';">19-28</button>
+
+
   </body>
 </html>
