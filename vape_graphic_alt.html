@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Cigarette and vaping device use by 12th graders</title>
+    <title>Cigarette and vaping device use by age group</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <link rel="stylesheet" type="text/css" href="vape_graphic_style.css"/>
   </head>
   <body>
     <h1>Cigarette and vaping device use by age group</h1>
-    <h2>Use by 12th graders</h2>
+    <h2>Cigarette and vaping device use overview</h2>
     <script>
-      var width = 440;
+      var width = 780;
       var height = 575;
       var margin = {top: 25, left: 55, right: 25, bottom: 200};
 
@@ -19,15 +19,22 @@
         .attr("height",height);
 
       var data = [
-        {x: "Cigarette use", y: 7.6},
-        {x: "Any vaping", y: 26.7},
-        {x: "Vaping nicotine", y: 20.9},
-        {x: "Vaping marijuana", y: 7.5},
-        {x: "Vaping flavor only", y: 13.5},
-      ];
+          {x: "8th grade cigarette use", y: 2.2},
+          {x: "8th grade vaping", y: 10.4},
+          {x: "10th grade cigarette use", y: 4.2},
+          {x: "10th grade vaping", y: 21.7},
+          {x: "12th grade cigarette use", y: 7.6},
+          {x: "12th grade vaping", y: 26.7},
+          {x: "College students cigarette use", y: 6.8},
+          {x: "College vaping", y: 21.3},
+          {x: "Young adults cigarette use", y: 12.3},
+          {x: "Young adults vaping", y: 17.1}
+        ];
+
+      var tickMeausre = [20,40,60,80,100]
 
         var xScale = d3.scaleBand()
-          .domain(["Cigarette use","Any vaping","Vaping nicotine","Vaping marijuana","Vaping flavor only"])
+          .domain(["8th grade cigarette use","8th grade vaping","10th grade cigarette use","10th grade vaping","12th grade cigarette use","12th grade vaping","College students cigarette use","College vaping","Young adults cigarette use","Young adults vaping"])
           .rangeRound([margin.left, width-margin.right])
           .padding(0.25);
 
@@ -38,15 +45,28 @@
         var xAxis = svg.append("g")
           .attr("transform",`translate(0,${height-margin.bottom})`)
           .call(d3.axisBottom().scale(xScale))
-          .selectAll("text")
+            .selectAll("text")
             .style("text-anchor", "end")
             .attr("dx","-.8em")
             .attr("dy",".15em")
             .attr("transform","rotate(-65)");
 
+            function make_y_gridlines() {
+              return d3.axisLeft()
+              .ticks(5);}
+
         var yAxis = svg.append("g")
           .attr("transform",`translate(${margin.left},0)`)
-          .call(d3.axisLeft().scale(yScale));
+          .call(d3.axisLeft().scale(yScale).ticks(5));
+
+        var ticks = svg.append("g")
+                  .attr("class", "grid")
+                  .call(d3.axisLeft()
+                      .scale(yScale)
+                      .ticks(5)
+                      .tickSize(-width + 25)
+                      .tickFormat(""))
+                      .attr("transform",`translate(${margin.left},0)`);
 
         var tooltip = d3.select("body")
           .append("div")
@@ -55,19 +75,11 @@
           .style("z-index", "10")
           .style("opacity", 0);
 
-        var ticks = svg.append("g")
-          .attr("class", "grid")
-          .call(d3.axisLeft()
-            .scale(yScale)
-            .ticks(5)
-            .tickSize(-width + 25)
-            .tickFormat(""))
-          .attr("transform",`translate(${margin.left},0)`);
-
         var bar = svg.selectAll("rect")
           .data(data)
           .enter()
           .append("rect")
+            .attr("class","bar")
             .attr("x",function(d) { return xScale(d.x); })
             .attr("y", function(d) { return yScale(d.y); })
             .attr("width",xScale.bandwidth())
@@ -96,7 +108,7 @@
           .attr("class","axisLabel")
           .attr("x",55)
           .attr("y",height-35)
-          .text("Drug type and method of consumption");
+          .text("Drug type and method of consumption by age group");
 
         var yLabel = svg.append("text")
           .attr("class","axisLabel")
@@ -107,12 +119,13 @@
           .text("30-day prevalence of use (%)");
     </script>
     <br>
-    <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic.html';">Main</button>
+    <button type="button" class="thisButton">Main</button>
     <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_8.html';">8th grade</button>
     <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_10.html';">10th grade</button>
-    <button type="button" class="thisButton">12th grade</button>
+    <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_12.html';">12th grade</button>
     <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_college.html';">College</button>
     <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_ya.html';">19-28</button>
+
 
   </body>
 </html>

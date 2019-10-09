@@ -48,6 +48,15 @@
           .attr("transform",`translate(${margin.left},0)`)
           .call(d3.axisLeft().scale(yScale));
 
+        var ticks = svg.append("g")
+          .attr("class", "grid")
+          .call(d3.axisLeft()
+            .scale(yScale)
+            .ticks(5)
+            .tickSize(-width + 25)
+            .tickFormat(""))
+          .attr("transform",`translate(${margin.left},0)`);
+
         var tooltip = d3.select("body")
           .append("div")
           .attr("class", "tooltip")
@@ -98,11 +107,12 @@
           .text("30-day prevalence of use (%)");
     </script>
     <br>
-    <button type="button" onclick="window.location.href = 'vape_graphic.html';">Main</button>
-    <button type="button" onclick="window.location.href = 'vape_graphic_10.html';">10th grade</button>
-    <button type="button" onclick="window.location.href = 'vape_graphic_12.html';">12th grade</button>
-    <button type="button" onclick="window.location.href = 'vape_graphic_college.html';">College</button>
-    <button type="button" onclick="window.location.href = 'vape_graphic_ya.html';">19-28</button>
+    <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic.html';">Main</button>
+    <button type="button" class="thisButton">8th grade</button>
+    <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_10.html';">10th grade</button>
+    <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_12.html';">12th grade</button>
+    <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_college.html';">College</button>
+    <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_ya.html';">19-28</button>
 
 
   </body>

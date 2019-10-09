@@ -35,7 +35,24 @@ div.tooltip{
   color: white;
 }
 
-button{
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.9;
+}
+.grid path {
+      stroke-width: 0;
+}
+
+.grid{
+  color:lightgrey;
+  z-index: 1;
+}
+
+.bar{
+  z-index: 5;
+}
+
+.thatButton{
   background-color: #CC0000;
   border: none;
   width: 80px;
@@ -47,11 +64,30 @@ button{
   font-size: 10pt;
 }
 
-button:hover {
+.thisButton{
+  background-color: #800000;
+  border: none;
+  width: 80px;
+  height: 30px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10pt;
+}
+
+.thatButton:hover {
   background-color: #800000;
   color: white;
-  width: 90px;
+  width: 85px;
   height: 35px;
   border-right: 5px solid #bf4040;
   border-bottom: 5px solid #bf4040;
+}
+
+.thisButton:hover{
+  background-color: #800000;
+  color: white;
+  width: 80px;
+  height: 30px;
 }
