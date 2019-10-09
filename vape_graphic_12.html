@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Cigarette and Vape use by Age Group</title>
+    <title>Cigarette and vaping device use by 12th graders</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <link rel="stylesheet" type="text/css" href="vape_graphic_style.css"/>
   </head>
   <body>
+    <h1>Cigarette and vaping device use by age group</h1>
+    <h2>Use by 12th graders</h2>
     <script>
       var width = 780;
       var height = 615;
@@ -61,16 +63,19 @@
             .attr("y", function(d) { return yScale(d.y); })
             .attr("width",xScale.bandwidth())
             .attr("height", function(d) { return height - margin.bottom - yScale(d.y); })
-            .attr("fill","#CC0000")
+            .attr("fill","#b12426")
+            .attr("opacity",".65")
+            .attr("stroke","#ff3333")
+            .attr("stroke-width","2")
             .on("mouseover", function(d) {
               d3.select(this)
-                .attr("fill","#800000");
+                .attr("opacity",".8");
                 tooltip.style("visibility", "visible")
                   .text(`${d.y}%`);
             }).on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
             .on("mouseout", function() {
               d3.select(this)
-                .attr("fill","#CC0000");
+                .attr("opacity",".65");
               return tooltip.style("visibility", "hidden");
             })
 
@@ -89,6 +94,7 @@
           .attr("text-anchor","middle")
           .text("30-day prevalence of use (%)");
     </script>
+    <br>
     <button type="button" onclick="window.location.href = 'vape_graphic_8.html';">8th grade</button>
     <button type="button" onclick="window.location.href = 'vape_graphic_10.html';">10th grade</button>
     <button type="button" onclick="window.location.href = 'vape_graphic.html';">Main</button>
