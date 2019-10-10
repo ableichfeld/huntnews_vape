@@ -9,9 +9,9 @@
     <h1>Cigarette and vaping device use by age group</h1>
     <h2>Use by eighth graders</h2>
     <script>
-      var width = 440;
-      var height = 575;
-      var margin = {top: 25, left: 55, right: 25, bottom: 200};
+      var width = 575;
+      var height = 525;
+      var margin = {top: 25, left: 55, right: 25, bottom: 150};
 
       var svg = d3.select("body")
         .append("svg")
@@ -26,6 +26,14 @@
         {x: "Vaping flavor only", y: 8.1}
       ];
 
+      var maxData = [
+        {x: "Cigarette use", y: 12.3, a: "Young adults (19-28)"},
+        {x: "Any vaping", y: 26.7, a: "12th grade"},
+        {x: "Vaping nicotine", y: 20.9, a: "12th grade"},
+        {x: "Vaping marijuana", y: 10.9, a: "College students"},
+        {x: "Vaping flavor only", y: 13.5, a: "12th grade"}
+      ];
+
         var xScale = d3.scaleBand()
           .domain(["Cigarette use","Any vaping","Vaping nicotine","Vaping marijuana","Vaping flavor only"])
           .rangeRound([margin.left, width-margin.right])
@@ -36,6 +44,7 @@
           .range([height-margin.bottom, margin.top]);
 
         var xAxis = svg.append("g")
+          .attr("class","axis")
           .attr("transform",`translate(0,${height-margin.bottom})`)
           .call(d3.axisBottom().scale(xScale))
           .selectAll("text")
@@ -45,15 +54,16 @@
             .attr("transform","rotate(-65)");
 
         var yAxis = svg.append("g")
+          .attr("class","axis")
           .attr("transform",`translate(${margin.left},0)`)
-          .call(d3.axisLeft().scale(yScale));
+          .call(d3.axisLeft().scale(yScale).ticks(5));
 
         var ticks = svg.append("g")
           .attr("class", "grid")
           .call(d3.axisLeft()
             .scale(yScale)
             .ticks(5)
-            .tickSize(-width + 25)
+            .tickSize(-width + margin.right + margin.left)
             .tickFormat(""))
           .attr("transform",`translate(${margin.left},0)`);
 
@@ -92,10 +102,42 @@
               .style("opacity", "0");
             })
 
+        var circle = svg.selectAll("circle")
+          .data(maxData)
+          .enter()
+          .append("circle")
+          .attr("cx", function(d) {return xScale(d.x) + 35;})
+          .attr("cy", function(d) {return yScale(d.y);})
+          .attr("r", 5)
+          .attr("fill", "lightgrey")
+          .attr("stroke", "black")
+          .attr("stroke-width",2)
+          .attr("opacity",".65")
+          .on("mouseover", function(d) {
+            d3.select(this)
+              .attr("opacity",".85");
+              tooltip
+              .attr("class","circleTip")
+              .transition()
+              .duration(300)
+              .style("opacity", "0.9")
+              .text(`Maximum: ${d.y}% ${d.a}`);
+          }).on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+          .on("mouseout", function() {
+            d3.select(this)
+              .attr("opacity",".65");
+            return tooltip
+            .transition()
+            .duration(200)
+            .attr("class","tooltip")
+            .style("opacity", "0");
+          })
+
         var xLabel = svg.append("text")
           .attr("class","axisLabel")
-          .attr("x",55)
+          .attr("x",width/2)
           .attr("y",height-35)
+          .attr("text-anchor","middle")
           .text("Drug type and method of consumption");
 
         var yLabel = svg.append("text")
@@ -113,7 +155,9 @@
     <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_12.html';">12th grade</button>
     <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_college.html';">College</button>
     <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_ya.html';">19-28</button>
-
+    <p class = "explainer">Use the buttons to explore the use of vaping devices and cigarettes among different age groups. "College" refers to individuals one to four years past high school, taking classes full-time at a two- or four-year college. "Young adults" refers to individuals between the ages 19 and 28.<br>Circles represent the maximum value in each drug type and method of consumption, regardless of age group.</p>
+    <p class = "credit">Data from <a href="http://www.monitoringthefuture.org/pubs/monographs/mtf-vol2_2018.pdf" target=_blank>Monitoring the Future:2018</a> from the Institute for Social Research, University of Michigan</p>
+    <p class = "credit">Graphic by Avery Bleichfeld</p>
 
   </body>
 </html>

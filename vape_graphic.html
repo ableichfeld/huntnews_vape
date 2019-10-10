@@ -7,27 +7,35 @@
   </head>
   <body>
     <h1>Cigarette and vaping device use by age group</h1>
-    <h2>Cigarette and vaping device use overview</h2>
+    <h2>Vaping device use overview</h2>
     <script>
-      var width = 440;
-      var height = 575;
-      var margin = {top: 25, left: 55, right: 25, bottom: 200};
+      var width = 575;
+      var height = 525;
+      var margin = {top: 25, left: 55, right: 25, bottom: 150};
 
       var svg = d3.select("body")
         .append("svg")
         .attr("width",width)
         .attr("height",height);
 
-      var data = [
-          {x: "8th grade vaping", y: 10.4},
-          {x: "10th grade vaping", y: 21.7},
-          {x: "12th grade vaping", y: 26.7},
-          {x: "College vaping", y: 21.3},
-          {x: "Young adults vaping", y: 17.1}
+      var vapeData = [
+          {x: "8th grade", y: 10.4},
+          {x: "10th grade", y: 21.7},
+          {x: "12th grade", y: 26.7},
+          {x: "College students", y: 21.3},
+          {x: "Young adults (19-28)", y: 17.1}
+        ];
+
+      var cigData = [
+          {x: "8th grade", y: 2.2},
+          {x: "10th grade", y: 4.2},
+          {x: "12th grade", y: 7.6},
+          {x: "College students", y: 6.8},
+          {x: "Young adults (19-28)", y: 12.3}
         ];
 
         var xScale = d3.scaleBand()
-          .domain(["8th grade vaping","10th grade vaping","12th grade vaping","College vaping","Young adults vaping"])
+          .domain(["8th grade","10th grade","12th grade","College students","Young adults (19-28)"])
           .rangeRound([margin.left, width-margin.right])
           .padding(0.25);
 
@@ -36,6 +44,7 @@
           .range([height-margin.bottom, margin.top]);
 
         var xAxis = svg.append("g")
+          .attr("class","axis")
           .attr("transform",`translate(0,${height-margin.bottom})`)
           .call(d3.axisBottom().scale(xScale))
             .selectAll("text")
@@ -45,6 +54,7 @@
             .attr("transform","rotate(-65)");
 
         var yAxis = svg.append("g")
+          .attr("class","axis")
           .attr("transform",`translate(${margin.left},0)`)
           .call(d3.axisLeft().scale(yScale).ticks(5));
 
@@ -53,7 +63,7 @@
           .call(d3.axisLeft()
             .scale(yScale)
             .ticks(5)
-            .tickSize(-width + 25)
+            .tickSize(-width + margin.right + margin.left)
             .tickFormat(""))
           .attr("transform",`translate(${margin.left},0)`);
 
@@ -65,7 +75,7 @@
           .style("opacity", 0);
 
         var bar = svg.selectAll("rect")
-          .data(data)
+          .data(vapeData)
           .enter()
           .append("rect")
             .attr("class","bar")
@@ -93,11 +103,41 @@
               .style("opacity", "0");
             })
 
+//          var cigBar = svg.selectAll("rect")
+            .data(cigData)
+            .enter()
+            .append("rect")
+              .attr("class","bar")
+              .attr("x",function(d) { return xScale(d.x) - 10;})
+              .attr("y", function(d) { return yScale(d.y); })
+              .attr("width",xScale.bandwidth())
+              .attr("height", function(d) { return height - margin.bottom - yScale(d.y); })
+              .attr("fill","#000000")
+              .attr("opacity",".65")
+              .attr("stroke","#808080")
+              .attr("stroke-width","2")
+              .on("mouseover", function(d) {
+                d3.select(this)
+                  .attr("opacity",".85");
+                  tooltip.transition()
+                  .duration(300)
+                  .style("opacity", "0.9")
+                  .text(`${d.y}%`);
+              }).on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+              .on("mouseout", function() {
+                d3.select(this)
+                  .attr("opacity",".65");
+                return tooltip.transition()
+                .duration(300)
+                .style("opacity", "0");
+              })
+
         var xLabel = svg.append("text")
           .attr("class","axisLabel")
-          .attr("x",55)
+          .attr("x",width/2)
           .attr("y",height-35)
-          .text("Drug type and method of consumption by age group");
+          .attr("text-anchor","middle")
+          .text("Age group");
 
         var yLabel = svg.append("text")
           .attr("class","axisLabel")
@@ -114,6 +154,9 @@
     <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_12.html';">12th grade</button>
     <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_college.html';">College</button>
     <button type="button" class="thatButton" onclick="window.location.href = 'vape_graphic_ya.html';">19-28</button>
+    <p class = "explainer">Use the buttons to explore the use of vaping devices and cigarettes among different age groups. "College" refers to individuals one to four years past high school, taking classes full-time at a two- or four-year college. "Young adults" refers to individuals between the ages 19 and 28.<br>Circles represent the maximum value in each drug type and method of consumption, regardless of age group.</p>
+    <p class = "credit">Data from <a href="http://www.monitoringthefuture.org/pubs/monographs/mtf-vol2_2018.pdf" target=_blank>Monitoring the Future:2018</a> from the Institute for Social Research, University of Michigan</p>
+    <p class = "credit">Graphic by Avery Bleichfeld</p>
 
 
   </body>

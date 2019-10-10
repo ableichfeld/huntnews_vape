@@ -104,6 +104,37 @@
               .style("opacity", "0");
             })
 
+        var circle = svg.selectAll("circle")
+          .data(maxData)
+          .enter()
+          .append("circle")
+          .attr("cx", function(d) {return xScale(d.x) + 35;})
+          .attr("cy", function(d) {return yScale(d.y);})
+          .attr("r", 5)
+          .attr("fill", "lightgrey")
+          .attr("stroke", "black")
+          .attr("stroke-width",2)
+          .attr("opacity",".65")
+          .on("mouseover", function(d) {
+            d3.select(this)
+              .attr("opacity",".85");
+              tooltip
+              .attr("class","circleTip")
+              .transition()
+              .duration(300)
+              .style("opacity", "0.9")
+              .text(`Maximum: ${d.y}% ${d.a}`);
+          }).on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+          .on("mouseout", function() {
+            d3.select(this)
+              .attr("opacity",".65");
+            return tooltip
+            .transition()
+            .duration(200)
+            .attr("class","tooltip")
+            .style("opacity", "0");
+          })
+
         var xLabel = svg.append("text")
           .attr("class","axisLabel")
           .attr("x",55)
